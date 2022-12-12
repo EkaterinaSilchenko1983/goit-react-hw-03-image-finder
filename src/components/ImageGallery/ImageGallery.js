@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 
 export const ImageGallery = ({ images }) => {
   return (
-    <ul className="gallery">
+    <ul>
       {images.map(image => (
         <ImageGalleryItem image={image} key={image.id} />
       ))}
@@ -12,5 +12,10 @@ export const ImageGallery = ({ images }) => {
 };
 
 ImageGallery.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    })
+  ),
+  // onImageClick: propTypes.func.isRequired,
 };

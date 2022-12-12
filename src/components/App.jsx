@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 // import axios from 'axios';
+import { fetchGalleryWithQuery } from './Api/Api';
 import { Button } from './Button/Button';
 import { GlobalStyle } from './GlobalStyle';
 import { Searchbar } from './Searchbar/Searchbar';
@@ -10,6 +11,7 @@ export class App extends Component {
     page: 1,
     query: [],
     images: [],
+    error: null,
   };
 
   handleSubmit = evt => {
@@ -22,12 +24,23 @@ export class App extends Component {
     // evt.target.reset();
   };
 
-  componentDidUpdate(_, prevState) {
+  async componentDidUpdate(_, prevState) {
     if (
       prevState.query !== this.state.query ||
       prevState.page !== this.state.page
     ) {
-      console.log('Fetch data');
+      try {
+        const response = await fetchGalleryWithQuery(
+          this.state.query,
+          this.state.page
+        );
+
+        this.setState({ images: response });
+      } catch (error) {
+        this.setState({ error });
+      } finally {
+        // this.setState({ isLoading: false });
+      }
     }
   }
 
@@ -48,7 +61,7 @@ export class App extends Component {
         }}
       >
         <Searchbar onSubmit={this.handleSubmit} />
-        <ImageGallery image={this.state.images} />
+        <ImageGallery images={this.state.images} />
 
         <Button onClick={this.hendleLoadMore} />
         <GlobalStyle />
