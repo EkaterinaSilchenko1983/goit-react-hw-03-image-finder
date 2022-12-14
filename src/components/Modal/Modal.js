@@ -3,11 +3,12 @@ import { createPortal } from 'react-dom';
 import { ModalImage, Overlay } from './Modal.styled';
 
 const modalRoot = document.querySelector('#modal-root');
-export const Modal = ({ src, alt, handleClose }) =>
+export const Modal = ({ src, onClose }) =>
   createPortal(
-    <Overlay onClick={handleClose}>
+    <Overlay onClick={onClose}>
       <ModalImage>
-        <img src={src} alt={alt} />
+        picture
+        <img src={src} alt="" />
       </ModalImage>
     </Overlay>,
     modalRoot
@@ -15,6 +16,6 @@ export const Modal = ({ src, alt, handleClose }) =>
 
 Modal.propTypes = {
   src: propTypes.string.isRequired,
-  alt: propTypes.string.isRequired,
-  handleClose: propTypes.func.isRequired,
+  // alt: propTypes.string.isRequired,
+  onClose: propTypes.func.isRequired,
 };

@@ -1,13 +1,14 @@
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { PropTypes } from 'prop-types';
+import { ImageGalleryList } from './ImageGallery.styled';
 
-export const ImageGallery = ({ images }) => {
+export const ImageGallery = ({ images, onSelect }) => {
   return (
-    <ul>
+    <ImageGalleryList>
       {images.map(image => (
-        <ImageGalleryItem image={image} key={image.id} />
+        <ImageGalleryItem image={image} key={image.id} onSelect={onSelect} />
       ))}
-    </ul>
+    </ImageGalleryList>
   );
 };
 
@@ -17,5 +18,5 @@ ImageGallery.propTypes = {
       id: PropTypes.number.isRequired,
     })
   ),
-  // onImageClick: propTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
 };

@@ -15,8 +15,8 @@ export class App extends Component {
     images: [],
     error: null,
     isLoading: false,
-
-    selectedImage: null,
+    isOpen: false,
+    selectedImage: '',
   };
 
   handleSubmit = evt => {
@@ -56,6 +56,31 @@ export class App extends Component {
     }));
   };
 
+  selectImage = imageUrl => {
+    // console.log(imageUrl);
+    this.setState({
+      selectedImage: imageUrl,
+      isOpen: true,
+    });
+  };
+
+  modalClose = () => {
+    this.setState({
+      selectedImage: '',
+      isOpen: false,
+    });
+  };
+
+  onKeyDown = event => {
+    if (event.code === 'Escape') {
+      this.modalClose();
+    }
+  };
+
+  async componentDidMount() {
+    window.addEventListener('keydown', this.onKeyDown);
+  }
+
   render() {
     return (
       <div
@@ -70,10 +95,15 @@ export class App extends Component {
         {this.state.isLoading ? (
           <Loader />
         ) : (
-          <ImageGallery images={this.state.images} />
+          <ImageGallery
+            images={this.state.images}
+            onSelect={this.selectImage}
+          />
         )}
 
-        <Modal isOpen={this.state.selectedImage} />
+        {this.state.isOpen && (
+          <Modal src={this.state.selectedImage} onClose={this.modalClose} />
+        )}
         {this.state.images.length > 0 && (
           <Button onClick={this.hendleLoadMore} />
         )}

@@ -1,8 +1,21 @@
-// import { PropTypes } from 'prop-types';
-export const ImageGalleryItem = ({ image }) => {
+import { PropTypes } from 'prop-types';
+import {
+  ImageGalleryItemImage,
+  ImageGalleryItems,
+} from './ImageGalleryItem.styled';
+export const ImageGalleryItem = ({ image, onSelect }) => {
   return (
-    <li className="gallery-item" id={image.id}>
-      <img src={image.webformatURL} name={image.largeImageURL} alt="" />
-    </li>
+    <ImageGalleryItems id={image.id}>
+      <ImageGalleryItemImage
+        src={image.webformatURL}
+        alt=""
+        onClick={() => onSelect(image.largeImageURL)}
+      />
+    </ImageGalleryItems>
   );
+};
+
+ImageGalleryItem.propTypes = {
+  image: PropTypes.object.isRequired,
+  onSelect: PropTypes.func.isRequired,
 };

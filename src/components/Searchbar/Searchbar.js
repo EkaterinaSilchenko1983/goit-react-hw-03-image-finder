@@ -1,24 +1,29 @@
 import { PropTypes } from 'prop-types';
-// import { InputLabel, InputText, ButtonForm } from './ContactForm.styled';
+import {
+  SearchbarWrapper,
+  SearchForm,
+  SearchFormButton,
+  SearchFormButtonLabel,
+  SearchFormInput,
+} from './Searchbar.styled';
 
 export const Searchbar = ({ onSubmit }) => {
   return (
-    <header>
-      <form onSubmit={onSubmit}>
-        <button type="submit" className="button">
-          <span>Search</span>
-        </button>
+    <SearchbarWrapper>
+      <SearchForm onSubmit={onSubmit}>
+        <SearchFormButton type="submit">
+          <SearchFormButtonLabel>Search</SearchFormButtonLabel>
+        </SearchFormButton>
 
-        <input
-          className="input"
+        <SearchFormInput
           type="text"
           name="query"
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
         />
-      </form>
-    </header>
+      </SearchForm>
+    </SearchbarWrapper>
   );
 };
 
