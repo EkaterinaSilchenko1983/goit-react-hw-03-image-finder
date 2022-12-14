@@ -5,6 +5,8 @@ import { Button } from './Button/Button';
 import { GlobalStyle } from './GlobalStyle';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
+import { Loader } from './Loader/Loader';
+import { Modal } from './Modal/Modal';
 
 export class App extends Component {
   state = {
@@ -12,6 +14,9 @@ export class App extends Component {
     query: [],
     images: [],
     error: null,
+    isLoading: false,
+
+    selectedImage: null,
   };
 
   handleSubmit = evt => {
@@ -29,6 +34,7 @@ export class App extends Component {
       prevState.query !== this.state.query ||
       prevState.page !== this.state.page
     ) {
+      this.setState({ isLoading: true });
       try {
         const response = await fetchGalleryWithQuery(
           this.state.query,
@@ -39,7 +45,7 @@ export class App extends Component {
       } catch (error) {
         this.setState({ error });
       } finally {
-        // this.setState({ isLoading: false });
+        this.setState({ isLoading: false });
       }
     }
   }
@@ -61,9 +67,16 @@ export class App extends Component {
         }}
       >
         <Searchbar onSubmit={this.handleSubmit} />
-        <ImageGallery images={this.state.images} />
+        {this.state.isLoading ? (
+          <Loader />
+        ) : (
+          <ImageGallery images={this.state.images} />
+        )}
 
-        <Button onClick={this.hendleLoadMore} />
+        <Modal isOpen={this.state.selectedImage} />
+        {this.state.images.length > 0 && (
+          <Button onClick={this.hendleLoadMore} />
+        )}
         <GlobalStyle />
       </div>
     );
