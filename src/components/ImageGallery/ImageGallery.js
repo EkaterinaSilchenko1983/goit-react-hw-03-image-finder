@@ -6,7 +6,12 @@ export const ImageGallery = ({ images, onSelect }) => {
   return (
     <ImageGalleryList>
       {images.map(image => (
-        <ImageGalleryItem image={image} key={image.id} onSelect={onSelect} />
+        <ImageGalleryItem
+          image={image}
+          key={image.id}
+          tags={image.tags}
+          onSelect={onSelect}
+        />
       ))}
     </ImageGalleryList>
   );

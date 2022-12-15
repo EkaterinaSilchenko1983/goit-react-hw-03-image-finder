@@ -3,12 +3,12 @@ import {
   ImageGalleryItemImage,
   ImageGalleryItems,
 } from './ImageGalleryItem.styled';
-export const ImageGalleryItem = ({ image, onSelect }) => {
+export const ImageGalleryItem = ({ tags, image, onSelect }) => {
   return (
     <ImageGalleryItems id={image.id}>
       <ImageGalleryItemImage
         src={image.webformatURL}
-        alt=""
+        alt={tags}
         onClick={() => onSelect(image.largeImageURL)}
       />
     </ImageGalleryItems>
@@ -18,4 +18,5 @@ export const ImageGalleryItem = ({ image, onSelect }) => {
 ImageGalleryItem.propTypes = {
   image: PropTypes.object.isRequired,
   onSelect: PropTypes.func.isRequired,
+  tags: PropTypes.string.isRequired,
 };

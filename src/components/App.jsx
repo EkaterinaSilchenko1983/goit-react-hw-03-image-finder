@@ -40,8 +40,9 @@ export class App extends Component {
           this.state.query,
           this.state.page
         );
-
-        this.setState({ images: response });
+        this.setState(prevState => ({
+          images: [...prevState.images, ...response.hits],
+        }));
       } catch (error) {
         this.setState({ error });
       } finally {
@@ -77,7 +78,7 @@ export class App extends Component {
     }
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     window.addEventListener('keydown', this.onKeyDown);
   }
 
